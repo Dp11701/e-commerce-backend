@@ -33,8 +33,9 @@ const getProductById = async (req, res) => {
 // @access Private (example: only authenticated users can create a product)
 const createProduct = async (req, res) => {
   try {
-    const { name, price, qty, category, cover, desc } = req.body;
+    const { _id, name, price, qty, category, cover, desc } = req.body;
     const product = new Product({
+      _id, // Make sure _id is a number type and provided by the client
       name,
       price,
       qty,
@@ -54,13 +55,13 @@ const createProduct = async (req, res) => {
 // @access Private (example: only authenticated users can update a product)
 const updateProduct = async (req, res) => {
   try {
-    const { name, price, qty, category, cover, desc } = req.body;
+    const { _id, name, price, qty, category, cover, desc } = req.body;
     const product = await Product.findById(req.params.id);
     if (!product) {
       res.status(404).json({ message: "Product not found" });
       return;
     }
-
+    product._id = _id; // Make sure _id is a number type and provided by the client
     product.name = name;
     product.price = price;
     product.qty = qty;
