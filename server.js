@@ -17,6 +17,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 
 app.use(errorHandler);
