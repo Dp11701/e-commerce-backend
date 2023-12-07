@@ -1,4 +1,5 @@
 const Product = require("../models/productModels");
+const express = require("express");
 
 // @desc Get all products
 // @route GET /api/products
@@ -24,6 +25,7 @@ const getProductById = async (req, res) => {
       res.status(404).json({ message: "Product not found" });
     }
   } catch (error) {
+    console.error("Error fetching product by ID:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -93,10 +95,33 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// @desc Get search products
+// @route GET /api/products/search
+// @access Public
+
+// Define the controller
+const searchController = async (req, res) => {
+  // Get the search term from the request
+  const searchTerm = req.query.search;
+
+  // Try to query the database for products that match the search term
+  try {
+    const products = await Product.find({
+      name: {
+        $regex: searchTerm,
+        $options: "i",
+      },
+    });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   getProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchController,
 };

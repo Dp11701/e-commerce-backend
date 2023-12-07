@@ -6,12 +6,14 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  searchController,
 } = require("../controllers/productController");
 
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.put("/:_id", updateProduct);
+router.delete("/:_id", deleteProduct);
+router.get("/search", searchController)
 
 module.exports = router;
