@@ -22,18 +22,18 @@ const orderSchema = new mongoose.Schema(
       type: String,
       ref: "Users",
     },
-    orderItems: {
-      type: Array,
-      required: [true, "Please add the order items"],
-    },
-    quantity: {
-      type: Array,
-      required: [true, "Please add the quantity"],
-    },
-    itemName: {
-      type: Array,
-      required: [true, "Please add the item name"],
-    },
+    orderItems: [
+      {
+        quantity: {
+          type: Number,
+          required: [true, "Please add the quantity"],
+        },
+        itemId: {
+          type: String,
+          required: [true, "Please add the item id"],
+        },
+      },
+    ],
   },
   {
     timestamps: true,
