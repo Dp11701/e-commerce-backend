@@ -7,6 +7,7 @@ const {
   deleteOrderByIdAsync,
   cancelOrder,
   searchOrderAsync,
+  getAllOrdersAsync,
 } = require("../controllers/orderController");
 
 // Get order details by ID
@@ -17,6 +18,8 @@ router.patch("/:id/updateInfo", updateOrderAsync);
 
 // Create a new order
 router.post("/", createOrderAsync);
+//get all orders
+router.get("/", getAllOrdersAsync);
 
 // Delete order by ID
 router.delete("/:id", deleteOrderByIdAsync);

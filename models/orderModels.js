@@ -10,10 +10,6 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add the delivery address"],
     },
-    shipMethod: {
-      type: String,
-      required: [true, "Please add the ship method"],
-    },
     phone: {
       type: Number,
       ref: "Users",
@@ -24,12 +20,13 @@ const orderSchema = new mongoose.Schema(
     },
     orderItems: [
       {
+        _id: false,
         quantity: {
           type: Number,
           required: [true, "Please add the quantity"],
         },
         itemId: {
-          type: String,
+          type: Number,
           required: [true, "Please add the item id"],
         },
       },

@@ -1,5 +1,20 @@
 const Order = require("../models/orderModels");
 
+// Controller function for getting all orders
+const getAllOrdersAsync = async (req, res) => {
+  try {
+    const allOrders = await Order.find({});
+    return res.json(allOrders);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      errorCode: "INTERNAL_SERVER_ERROR",
+      errorDetails: ["An internal server error occurred"],
+      data: null,
+    });
+  }
+};
+
 // Controller function for getting order details
 const getOrderDetailAsync = async (req, res) => {
   try {
@@ -112,4 +127,5 @@ module.exports = {
   deleteOrderByIdAsync,
   cancelOrder,
   searchOrderAsync,
+  getAllOrdersAsync,
 };
