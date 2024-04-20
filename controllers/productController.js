@@ -33,17 +33,27 @@ const getProductById = async (req, res) => {
 // @desc Create a new product
 // @route POST /api/products
 // @access Private (example: only authenticated users can create a product)
-const createProduct = async (req, res) => {
+const   createProduct = async (req, res) => {
   try {
-    const { _id, name, price, qty, category, cover, desc } = req.body;
+    const {
+      _id,
+      name,
+      price,
+      stock_quantity,
+      sold_quantity,
+      category_id,
+      cover,
+      description,
+    } = req.body;
     const product = new Product({
       _id, // Make sure _id is a number type and provided by the client
       name,
       price,
-      qty,
-      category,
+      stock_quantity,
+      sold_quantity,
+      category_id,
       cover,
-      desc,
+      description,
     });
     const createdProduct = await product.save();
     res.status(201).json(createdProduct);
@@ -57,7 +67,16 @@ const createProduct = async (req, res) => {
 // @access Private (example: only authenticated users can update a product)
 const updateProduct = async (req, res) => {
   try {
-    const { _id, name, price, qty, category, cover, desc } = req.body;
+    const {
+      _id,
+      name,
+      price,
+      stock_quantity,
+      sold_quantity,
+      category_id,
+      cover,
+      description,
+    } = req.body;
     const product = await Product.findById(req.params.id);
     if (!product) {
       res.status(404).json({ message: "Product not found" });
@@ -66,10 +85,11 @@ const updateProduct = async (req, res) => {
     product._id = _id; // Make sure _id is a number type and provided by the client
     product.name = name;
     product.price = price;
-    product.qty = qty;
-    product.category = category;
+    product.stock_quantity = stock_quantity;
+    product.sold_quantity = sold_quantity;
+    product.category_id = category_id;
     product.cover = cover;
-    product.desc = desc;
+    product.description = description;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } catch (error) {
