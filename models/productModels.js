@@ -6,10 +6,10 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: true },
     price: { type: Number, required: true },
     stock_quantity: { type: Number, require: true },
-    sold_quantity: { type: Number, required: true },
+    sold_quantity: { type: Number, required: false },
     category_id: { type: String, required: true },
-    cover: { type: String, required: true },
-    description: { type: String, required: true },
+    cover: { type: String, required: false },
+    description: { type: String, required: false },
   },
   { _id: false }
 );

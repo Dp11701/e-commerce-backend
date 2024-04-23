@@ -33,7 +33,7 @@ const getProductById = async (req, res) => {
 // @desc Create a new product
 // @route POST /api/products
 // @access Private (example: only authenticated users can create a product)
-const   createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
   try {
     const {
       _id,
@@ -45,6 +45,16 @@ const   createProduct = async (req, res) => {
       cover,
       description,
     } = req.body;
+
+    // Kiểm tra xem có sản phẩm nào có _id trùng không
+    const existingProduct = await Product.findOne({ _id });
+    if (existingProduct) {
+      return res
+        .status(409)
+        .json({ message: "Product with the same ID already exists" });
+    }
+
+    // Tạo sản phẩm mới
     const product = new Product({
       _id, // Make sure _id is a number type and provided by the client
       name,
@@ -55,9 +65,11 @@ const   createProduct = async (req, res) => {
       cover,
       description,
     });
+
     const createdProduct = await product.save();
     res.status(201).json(createdProduct);
   } catch (error) {
+    console.error("Error creating product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
