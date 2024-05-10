@@ -3,6 +3,7 @@ const {
   registerUser,
   currentUser,
   loginUser,
+  getAllUsers,
 } = require("../controllers/userController");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -13,5 +14,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 router.get("/current", validateToken, currentUser);
+
+router.get("/", getAllUsers);
 
 module.exports = router;
