@@ -10,7 +10,7 @@ const User = require("../models/userModel");
 const registerUser = asyncHandler(async (req, res) => {
   const { username, fullName, phone, email, password, role } = req.body;
   const userRole = role || 1;
-  if (!username || !email || !password || !phone || !fullName) {
+  if (!username || !email || !password) {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
