@@ -8,11 +8,11 @@ const userSchema = mongoose.Schema(
     },
     fullName: {
       type: String,
-      require: [true, "Please add the full name"],
+      require: [false, "Please add the full name"],
     },
     phone: {
       type: Number,
-      require: [true, "Please add the phone"],
+      require: [false, "Please add the phone"],
     },
     email: {
       type: String,
@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       require: [true, "Please add the user password"],
+    },
+    role: {
+      type: Number,
+      require: false,
     },
   },
   {

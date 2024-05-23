@@ -8,8 +8,9 @@ const User = require("../models/userModel");
 //@route POST /api/users/register
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, fullName, phone, email, password } = req.body;
-  if (!username || !email || !password || !phone || !fullName) {
+  const { username, fullName, phone, email, password, role } = req.body;
+  const userRole = role || 1;
+  if (!username || !email || !password) {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
@@ -28,9 +29,9 @@ const registerUser = asyncHandler(async (req, res) => {
     phone,
     email,
     password: hashedPassword,
+    role: userRole,
   });
 
-  console.log(`User created ${user}`);
   if (user) {
     res.status(201).json({ _id: user.id, email: user.email });
   } else {
@@ -79,4 +80,12 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-module.exports = { registerUser, loginUser, currentUser };
+//@desc Get all users
+//@route GET /api/users
+//@access private (assuming only authenticated users can access this route)
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
+});
+
+module.exports = { registerUser, loginUser, currentUser, getAllUsers };
